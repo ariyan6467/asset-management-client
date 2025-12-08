@@ -6,19 +6,19 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Authantication/Authprovider";
 import axios from "axios";
 import UseAxiosSecure from "../../../hook/UseAxiosSecure";
-
+import UseAuth from "../../../hook/UseAuth";
 
 const HR = () => {
   const { handleRegister, InsertInfo, user, setuser, handleGoogleSignUp } =
-    useContext(AuthContext);
-    const axiosSecure = UseAxiosSecure();
+   UseAuth();
+  const axiosSecure = UseAxiosSecure();
   console.log(user);
 
   const {
     register,
     handleSubmit,
 
-    formState: { errors },
+    
   } = useForm();
 
   function hrRegister(data) {
@@ -36,8 +36,8 @@ const HR = () => {
           import.meta.env.VITE_image_host_key
         }`;
 
-      
-           axios.post(img_Api_Url, formData, {
+        axios
+          .post(img_Api_Url, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -55,28 +55,13 @@ const HR = () => {
               logoURL: imgRes.data.data.display_url,
             };
 
-        axiosSecure.post("/users",userInfo)
-          .then(res => {
-           if(res.data.insertedId){
+            axiosSecure.post("/users", userInfo).then((res) => {
+              console.log(res);
+              if (res.data.insertedId) {
                 console.log("user created successfully in database");
                 alert("database");
               }
-          })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            });
 
             const UserInfo = {
               displayName: data.name,

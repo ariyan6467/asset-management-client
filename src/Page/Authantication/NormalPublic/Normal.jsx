@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Logo from "../../Home/Navbar/Logo";
 import { AuthContext } from "../../../Authantication/Authprovider";
 import { useForm } from "react-hook-form";
+import UseAuth from "../../../hook/UseAuth";
 
 const Normal = () => {
-  const { handleSignIn, handleGoogleSignIn } = useContext(AuthContext);
+  const { handleSignIn, handleGoogleSignIn } = UseAuth();
   const {
     register,
     handleSubmit,

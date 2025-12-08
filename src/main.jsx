@@ -52,7 +52,7 @@ const router = createBrowserRouter([
     Component:DashBoardLayout,
     children:[
    {
-    path:"asset-list",
+    path:"/dashboard",
     Component:AssetList,  
     },
     {

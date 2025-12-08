@@ -7,6 +7,7 @@ import { VscRequestChanges } from "react-icons/vsc";
 import { MdAddModerator } from "react-icons/md";
 import { CiViewList } from "react-icons/ci";
 import { AuthContext } from "../Authantication/Authprovider";
+import UseAuth from "../hook/UseAuth";
 // --- Utility Components for Reusability ---
 
 /**
@@ -56,7 +57,7 @@ const ToolListItem = ({ icon, title, description }) => (
 // --- Main Dashboard Component ---
 
 const DashBoardLayout = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = UseAuth();
   console.log(user);
   return (
     // Main container: full screen height, flex row for the three columns
@@ -77,7 +78,7 @@ const DashBoardLayout = () => {
           </NavLink>
           {/* HR routes */}
           <div>
-            <NavLink to="/dashboard/asset-list">
+            <NavLink to="/dashboard">
               <button
                 className="btn btn-ghost btn-square tooltip tooltip-right"
                 data-tip="asset-list"

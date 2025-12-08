@@ -8,8 +8,9 @@ import styled from "styled-components";
 import { AuthContext } from "../../../Authantication/Authprovider";
 import { CiLogout } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
+import UseAuth from "../../../hook/UseAuth";
 const RightNav = () => {
-  const { handleLogeOut } = useContext(AuthContext);
+  const { handleLogeOut } = UseAuth();
   console.log(handleLogeOut);
   function signOut(){
      handleLogeOut()

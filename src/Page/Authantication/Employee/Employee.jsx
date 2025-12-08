@@ -6,11 +6,12 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Authantication/Authprovider";
 import axios from "axios";
 import UseAxiosSecure from "../../../hook/UseAxiosSecure";
+import UseAuth from "../../../hook/UseAuth";
 
 
 const EmployeeSignupForm = () => {
   const axiosSecure = UseAxiosSecure();
-  const { handleRegister, InsertInfo, user, setuser, handleGoogleSignUp } = useContext(AuthContext);
+  const { handleRegister, InsertInfo, user, setuser, handleGoogleSignUp } = UseAuth();
   console.log(user);
 
   const {
