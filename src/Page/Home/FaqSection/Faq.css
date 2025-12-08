@@ -1,0 +1,113 @@
+/* --- Global Reset and Typography --- */
+body {
+    background-color: #f7f9fb; 
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; 
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- Container and Header Styling --- */
+.faq-container {
+    max-width: 900px;
+    margin: 60px auto; 
+    padding: 20px;
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-tag {
+    /* Style matching the light blue/teal tag */
+    background-color: #e6f7ff; 
+    color: #1890ff; 
+    padding: 6px 12px;
+    border-radius: 4px; 
+    font-size: 0.85em;
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.faq-header h1 {
+    font-size: 2.5em;
+    font-weight: 700; 
+    margin: 0 0 15px 0;
+    color: #1d293f; 
+}
+
+.faq-header p {
+    color: #69778c; 
+    font-size: 1em;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* --- Accordion Styling --- */
+.accordion {
+    padding: 0 15px; 
+}
+
+.accordion-item {
+    background-color: white;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    /* Clean, noticeable shadow */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+    border: none; 
+}
+
+.accordion-header {
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600; 
+    color: #1d293f;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 8px;
+    user-select: none; 
+}
+
+.accordion-header:hover {
+    background-color: #fafbfd; 
+    color: #3f51b5; 
+}
+
+.accordion-question {
+    font-size: 1.05em;
+}
+
+.accordion-icon {
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #99aab5;
+    transition: transform 0.3s ease-out;
+}
+
+/* Apply rotation when the item is open (when 'rotate' class is applied) */
+.accordion-icon.rotate {
+    transform: rotate(180deg);
+}
+
+/* --- Answer Content Styling --- */
+.accordion-collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out; 
+}
+
+.accordion-collapse.show {
+    max-height: 500px; /* Large enough to show content */
+}
+
+.accordion-body {
+    padding: 0 24px 20px 24px;
+    border-top: 1px solid #f0f0f0; /* Lighter separator line */
+    color: #69778c;
+    font-size: 1em;
+    line-height: 1.6;
+}

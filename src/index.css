@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@theme {
+  --color-primary-blue: #0d47a1;
+  --color-secondary-green: #00e073;
+  --color-dark-text: #374151;
+  --font-sans: "Inter", sans-serif;
+}
+
+.bg-hero-crosses {
+  background-color: #064bb5;
+
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+}
+
+body {
+  background-color: #064BB5;
+   
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center center;
+    @apply text-white;
+    min-height: 100vh;
+}
+
+.icon-box {
+  @apply p-2 rounded-lg flex items-center justify-center;
+}
