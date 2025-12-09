@@ -262,7 +262,7 @@ const DashBoardLayout = () => {
       </main>
 
       {/* === 3. Right Sidebar (Tools/Modules Panel) === */}
-      <aside className="w-80 bg-white border-l border-gray-300 p-4 overflow-y-auto z-10 shadow-lg">
+      <aside className="hidden  w-80 bg-white border-l border-gray-300 p-4 overflow-y-auto z-10 shadow-lg">
         <h3 className="font-bold text-lg mb-4 text-gray-800">Flow Control</h3>
 
         <div className="space-y-3">

@@ -22,7 +22,9 @@ import MyAsset from './Dashboard/Employee/MyAsset.jsx';
 import RequestAsset from './Dashboard/Employee/RequestAsset.jsx';
 import MyTeam from './Dashboard/Employee/MyTeam.jsx';
 import Profile from './Dashboard/Employee/Profile.jsx';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PaymentSuccessPage from './Dashboard/Manager/Payment/PaymentSuccess.jsx';
+import PaymentDeclinedPage from './Dashboard/Manager/Payment/PaymentCancel.jsx';
 
 const router = createBrowserRouter([
   {
@@ -48,7 +50,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path:"/dashboard",
+    path:"dashboard",
     Component:DashBoardLayout,
     children:[
    {
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
     {
        path:"profile",
       Component:Profile
+    },
+    {
+      path:"package-payment-successful",
+      Component:PaymentSuccessPage,
+    },
+    {
+      path:"package-payment-declined",
+      Component:PaymentDeclinedPage,
     }
 
     ]
@@ -93,11 +103,14 @@ const router = createBrowserRouter([
   }
 ]);
 
+const queryClient =  new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Authprovider>
+   <QueryClientProvider  client={queryClient}>
+     <Authprovider>
        <RouterProvider router={router} />
     </Authprovider>
+   </QueryClientProvider>
   </StrictMode>
 )

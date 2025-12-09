@@ -12,7 +12,7 @@ const HR = () => {
   const { handleRegister, InsertInfo, user, setuser, handleGoogleSignUp } =
    UseAuth();
   const axiosSecure = UseAxiosSecure();
-  console.log(user);
+  console.log(user,);
 
   const {
     register,
@@ -36,8 +36,8 @@ const HR = () => {
           import.meta.env.VITE_image_host_key
         }`;
 
-        axios
-          .post(img_Api_Url, formData, {
+       
+           axios.post(img_Api_Url, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

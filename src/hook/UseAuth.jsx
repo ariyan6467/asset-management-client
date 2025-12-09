@@ -6,11 +6,13 @@ const UseAuth = () => {
   return authInfo || {
       user: null,
       loading: true,
+      packagePrice:0,
       handleRegister: () => {},
       handleSignIn: () => {},
       handleLogeOut: () => {},
       InsertInfo: () => {},
-      
+    
+     setPackagePrice: () => {},
       handleGoogleSignIn: () => {},
       handleGoogleSignUp: () => {},
       setuser: () => {},
@@ -19,3 +21,4 @@ const UseAuth = () => {
 };
 
 export default UseAuth;
+ 

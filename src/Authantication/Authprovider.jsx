@@ -9,6 +9,7 @@ export const AuthContext = createContext(null);
 const Authprovider = ({children}) => {
 const [user,setuser] = useState(null);
  const [loading,setLoading] = useState(true);
+ const [packagePrice,setPackagePrice] = useState(0)
     function handleRegister(email,password){
     return createUserWithEmailAndPassword(auth,email,password)
     
@@ -56,7 +57,8 @@ const authInfo = {
    handleLogeOut,
   handleSignIn,
   handleGoogleSignIn,
-  handleGoogleSignUp
+  handleGoogleSignUp,
+  packagePrice,setPackagePrice
 }
     return (
         <AuthContext.Provider value={authInfo}>
