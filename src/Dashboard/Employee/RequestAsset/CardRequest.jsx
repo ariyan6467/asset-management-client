@@ -19,7 +19,7 @@ let timerInterval;
     companyName: asset?.companyName,
     processedBy: user?.email,
   };
-
+console.log(asset);
   // Move the handleRequest function inside the modal opening action to ensure it has access to the correct asset data
   function handleRequest() {
     axiosSecure.post("/add-request", requestInfo).then((res) => {
