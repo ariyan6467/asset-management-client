@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import UseAxiosSecure from "../../hook/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import UseAuth from "../../hook/UseAuth";
 import Swal from "sweetalert2";
+import { useSearchParams } from "react-router-dom";
 
 const AllRequest = () => {
   const axiosSecure = UseAxiosSecure();
   const { user } = UseAuth();
-  console.log(user);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Pagination Initialization
+  const initialPage = parseInt(searchParams.get("page")) || 1;
+  const initialLimit = parseInt(searchParams.get("limit")) || 10;
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [itemsPerPage, setItemsPerPage] = useState(initialLimit);
+
   const {
     isLoading,
     isError,
@@ -22,6 +30,33 @@ const AllRequest = () => {
       return result.data;
     },
   });
+  console.log(requests);
+  // Sync URL with pagination state
+  useEffect(() => {
+    setSearchParams({ page: currentPage, limit: itemsPerPage });
+  }, [currentPage, itemsPerPage, setSearchParams]);
+
+  // Pagination Logic
+  const totalItems = requests.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  // Fallback to empty array if requests is not array yet
+  const safeRequests = Array.isArray(requests) ? requests : [];
+  const currentRequests = safeRequests.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleLimitChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1);
+  };
 
   // Update after approval or rejection
   function handleRequest(request, requestStatus) {
@@ -36,6 +71,9 @@ const AllRequest = () => {
       assetId: request.assetId,
       assetType: request.assetType,
       companyLogo: user.photoURL,
+      productImage: request.productImage,
+      requestDate: request.requestDate,
+      assetName: request.assetName,
     };
     axiosSecure
       .patch(`/update-request/${request._id}`, updateAsset)
@@ -59,26 +97,24 @@ const AllRequest = () => {
     handleRequest(request, "rejected");
   }
 
-  console.log(requests);
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-striped w-full shadow-lg border rounded-lg">
-        {/* head */}
-        <thead className="bg-gray-800 text-white">
-          <tr>
-            <th className="p-4">#</th>
-            <th className="p-4">Employee Name</th>
-            <th className="p-4">Asset</th>
-            <th className="p-4">Status</th>
-            <th className="p-4">Action</th>
-          </tr>
-        </thead>
-        <tbody className="text-gray-700">
-          {/* row 1 */}
-          {Array.isArray(requests) &&
-            requests.map((req, index) => (
+    <div>
+      <div className="overflow-x-auto">
+        <table className="table table-striped w-full shadow-lg border rounded-lg">
+          {/* head */}
+          <thead className="bg-gray-800 text-white">
+            <tr>
+              <th className="p-4">#</th>
+              <th className="p-4">Employee Name</th>
+              <th className="p-4">Asset</th>
+              <th className="p-4">Status</th>
+              <th className="p-4">Action</th>
+            </tr>
+          </thead>
+          <tbody className="text-gray-700">
+            {currentRequests.map((req, index) => (
               <tr key={req._id} className="hover:bg-gray-100">
-                <td className="p-4">{index + 1}</td>
+                <td className="p-4">{startIndex + index + 1}</td>
                 <td className="p-4">
                   <div className="flex items-center gap-3">
                     <div className="avatar">{/* Add avatar image */}</div>
@@ -137,8 +173,53 @@ const AllRequest = () => {
                 </td>
               </tr>
             ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center items-center mt-6 gap-4">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="btn btn-sm btn-outline"
+        >
+          Previous
+        </button>
+
+        <div className="join">
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`join-item btn btn-sm ${
+                currentPage === index + 1 ? "btn-active" : ""
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="btn btn-sm btn-outline"
+        >
+          Next
+        </button>
+
+        <select
+          value={itemsPerPage}
+          onChange={handleLimitChange}
+          className="select select-bordered select-sm"
+        >
+          <option value="5">5 per page</option>
+          <option value="10">10 per page</option>
+          <option value="20">20 per page</option>
+          <option value="50">50 per page</option>
+        </select>
+      </div>
     </div>
   );
 };

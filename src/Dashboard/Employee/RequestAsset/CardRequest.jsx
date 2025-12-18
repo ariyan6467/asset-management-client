@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const CardRequest = ({ asset }) => {
   const axiosSecure = UseAxiosSecure();
   const { user } = UseAuth();
-  console.log(asset?.email);
+  console.log(asset);
 let timerInterval;
   const requestInfo = {
     assetId: asset?._id,
@@ -19,6 +19,7 @@ let timerInterval;
     hrEmail: asset?.email,
     companyName: asset?.companyName,
     processedBy: user?.email,
+    productImage: asset?.productImage
   };
 console.log(asset);
   // Move the handleRequest function inside the modal opening action to ensure it has access to the correct asset data
