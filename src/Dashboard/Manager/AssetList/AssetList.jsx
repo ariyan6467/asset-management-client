@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { FaLaptop, FaEdit, FaTrashAlt, FaCalendarAlt, FaSpinner } from "react-icons/fa"; // Added icons
 import moment from "moment"; // Assuming moment or a similar library for date formatting
 import Logo from "../../../Page/Home/Navbar/Logo";
+import UseAuth from "../../../hook/UseAuth";
 
 const AssetList = () => {
+  const {user} = UseAuth();
+  console.log(user);
   const axiosSecure = UseAxiosSecure();
   // Renamed 'asstes' to 'assets' for better clarity and corrected the refetch placement
   const {

@@ -1,12 +1,16 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Logo from "../../Home/Navbar/Logo";
-import { AuthContext } from "../../../Authantication/Authprovider";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../../hook/UseAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Normal = () => {
   const { handleSignIn, handleGoogleSignIn } = UseAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
@@ -15,15 +19,16 @@ const Normal = () => {
   } = useForm();
 
   function SignIn(data) {
-    console.log(data);
+    setErrorMessage("");
     handleSignIn(data.email, data.password)
       .then((res) => {
-                 console.log(res.user)
+        console.log(res.user);
+        navigate(from, { replace: true });
       })
       .catch((error) => {
-       
         const errorMessage = error.message;
-         console.log(errorMessage);
+        console.log(errorMessage);
+        setErrorMessage("Login failed. Please check your credentials.");
       });
   }
 
@@ -31,10 +36,12 @@ const Normal = () => {
     handleGoogleSignIn()
       .then((res) => {
         console.log(res.user);
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage);
+        setErrorMessage("Google sign-in failed. Please try again.");
       });
   }
   return (
@@ -68,6 +75,9 @@ const Normal = () => {
               <span className="forgot-password">
                 <a href="#">Forgot Password ?</a>
               </span>
+              {errorMessage && (
+                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+              )}
               <input
                 className="login-button"
                 type="submit"

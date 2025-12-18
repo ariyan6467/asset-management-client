@@ -25,6 +25,8 @@ import Profile from './Dashboard/Employee/Profile.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PaymentSuccessPage from './Dashboard/Manager/Payment/PaymentSuccess.jsx';
 import PaymentDeclinedPage from './Dashboard/Manager/Payment/PaymentCancel.jsx';
+import HrRoute from './Authantication/HrRoute.jsx';
+import MyProfile from './Dashboard/Employee/MyProfile/MyProfile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -55,23 +57,40 @@ const router = createBrowserRouter([
     children:[
    {
     path:"/dashboard",
-    Component:AssetList,  
+  //  element:<HrRoute>
+  //  <AssetList></AssetList>
+  //  </HrRoute>,  
+  element:<AssetList></AssetList>
     },
     {
       path:"add-asset",
-      Component:AddAsset,
+      // element:<HrRoute>
+      // <AddAsset></AddAsset>
+      // </HrRoute>,
+      element:<AddAsset></AddAsset>
     },
     {
       path:"all-request",
-      Component:AllRequest,
+      // element:<HrRoute><AllRequest></AllRequest></HrRoute>,
+      element:<AllRequest></AllRequest>
     },
     {
       path:"my-employee",
-      Component:MyEmployee,
+    //  element:<HrRoute>
+    //  <MyEmployee></MyEmployee>
+    //  </HrRoute>,
+    element:<MyEmployee></MyEmployee>
     },
     {
       path:"upgrade-package",
-      Component:UpgradePackage
+      // element:<HrRoute>
+      // <UpgradePackage></UpgradePackage>
+      // </HrRoute>
+      element:<UpgradePackage></UpgradePackage>
+    },
+    {
+      path:"my-profile",
+      Component:MyProfile
     },
     {
        path:"my-asset",
@@ -96,7 +115,8 @@ const router = createBrowserRouter([
     {
       path:"package-payment-declined",
       Component:PaymentDeclinedPage,
-    }
+    },
+    
 
     ]
 

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 const CardRequest = ({ asset }) => {
   const axiosSecure = UseAxiosSecure();
   const { user } = UseAuth();
+  console.log(asset?.email);
 let timerInterval;
   const requestInfo = {
     assetId: asset?._id,

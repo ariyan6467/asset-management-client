@@ -61,7 +61,7 @@ const PricingCard = ({
     window.location.href = res?.data?.url;
   }
   return (
-    <div className={`relative p-8 rounded-2xl flex flex-col ${cardClasses}`}>
+    <div className={` relative p-8 rounded-2xl flex flex-col ${cardClasses}`}>
       {/* Most Popular Badge */}
       {isPopular && (
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-teal-400 text-blue-900 text-xs font-semibold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">

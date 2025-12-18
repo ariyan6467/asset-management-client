@@ -1,12 +1,45 @@
-import axios from 'axios';
-import React from 'react';
+import axios from "axios";
+import React, { useEffect } from "react";
+import UseAuth from "./UseAuth";
+import { useNavigate } from "react-router";
 
- const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000/"
+const axiosSecure = axios.create({
+  baseURL: "http://localhost:3000/",
 });
 
 const UseAxiosSecure = () => {
-    return axiosSecure;
+  const { user, handleLogeOut } = UseAuth();
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (!user?.accessToken) return;
+  //   const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
+  //     config.headers.Authorization = `Bearer ${user?.accessToken}`;
+
+  //     return config;
+  //   });
+
+  //   const resInterceptor = axiosSecure.interceptors.response.use(
+  //     (response) => {
+  //       return response;
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       const statuscode = error.status;
+  //       if (statuscode === 402 || statuscode === 403) {
+  //         handleLogeOut().then(() => {
+  //           navigate("/normal-login");
+  //         });
+  //       }
+  //       return Promise.reject(error);
+  //     }
+  //   );
+
+  //   return () => {
+  //     axiosSecure.interceptors.request.eject(reqInterceptor);
+  //     axiosSecure.interceptors.response.eject(resInterceptor);
+  //   };
+  // }, [user,handleLogeOut,navigate]);
+  return axiosSecure;
 };
 
 export default UseAxiosSecure;
