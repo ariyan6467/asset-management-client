@@ -56,12 +56,12 @@ console.log(asset);
 
   return (
     <StyledWrapper>
-      <div className="card">
+      <div className="card h-[350px]">
         <div className="card__img mb-18">
           <img
             src={asset.productImage}
             alt=""
-            className="rounded-2xl"
+            className="rounded-2xl h-[150px] w-full object-cover"
           />
         </div>
         <div className="card__subtitle">{asset?.productType}</div>

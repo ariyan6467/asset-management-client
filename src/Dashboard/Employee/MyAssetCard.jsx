@@ -1,9 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  User, Briefcase, Mail, 
-  ShieldCheck, Clock 
-} from 'lucide-react';
+import { User, Briefcase, Mail, ShieldCheck, Clock } from 'lucide-react';
 
 const AssetCard = ({ asset }) => {
   const {
@@ -21,17 +18,12 @@ const AssetCard = ({ asset }) => {
     status,
   } = asset;
 
-  // Modern status styling with subtle glows
   const getStatusStyles = (status) => {
     const map = {
-      approved:
-        'bg-emerald-500/10 text-emerald-600 border-emerald-200 shadow-emerald-100',
-      pending:
-        'bg-amber-500/10 text-amber-600 border-amber-200 shadow-amber-100',
-      rejected:
-        'bg-rose-500/10 text-rose-600 border-rose-200 shadow-rose-100',
-      assigned:
-        'bg-blue-500/10 text-blue-600 border-blue-200 shadow-blue-100',
+      approved: 'bg-emerald-500/10 text-emerald-600 border-emerald-200 shadow-emerald-100',
+      pending: 'bg-amber-500/10 text-amber-600 border-amber-200 shadow-amber-100',
+      rejected: 'bg-rose-500/10 text-rose-600 border-rose-200 shadow-rose-100',
+      assigned: 'bg-blue-500/10 text-blue-600 border-blue-200 shadow-blue-100',
     };
     return (
       map[status?.toLowerCase()] ||
@@ -48,6 +40,10 @@ const AssetCard = ({ asset }) => {
         })
       : 'N/A';
 
+  const handlePrint = () => {
+    window.print(); // Trigger the browser's print dialog
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
@@ -63,10 +59,7 @@ const AssetCard = ({ asset }) => {
             whileHover={{ scale: 1.04 }}
             transition={{ duration: 0.35 }}
             className="w-full h-full object-cover group-hover:brightness-95 transition-all"
-            src={
-              productImage ||
-              'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600'
-            }
+            src={productImage || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=600'}
             alt={assetName}
           />
         </div>
@@ -74,9 +67,7 @@ const AssetCard = ({ asset }) => {
         {/* Floating Status Badge */}
         <div className="absolute top-4 left-4 sm:top-5 sm:left-5">
           <span
-            className={`backdrop-blur-md border px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm ${getStatusStyles(
-              status
-            )}`}
+            className={`backdrop-blur-md border px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm ${getStatusStyles(status)}`}
           >
             {status}
           </span>
@@ -114,17 +105,13 @@ const AssetCard = ({ asset }) => {
           </div>
         </div>
 
-        {/* Data Grid: Using responsive columns for perfect alignment */}
+        {/* Data Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-5 flex-1">
-          {/* Column 1: People */}
           <div className="space-y-3">
             <div className="group/item">
               <div className="flex flex-wrap items-center gap-1.5 mb-1">
                 <p className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                  <User
-                    size={13}
-                    className="text-slate-300 group-hover/item:text-indigo-500 transition-colors"
-                  />
+                  <User size={13} className="text-slate-300 group-hover/item:text-indigo-500 transition-colors" />
                   Employee
                 </p>
                 <span className="hidden sm:inline text-slate-300">•</span>
@@ -140,10 +127,7 @@ const AssetCard = ({ asset }) => {
 
             <div className="group/item">
               <p className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">
-                <ShieldCheck
-                  size={13}
-                  className="text-slate-300 group-hover/item:text-emerald-500 transition-colors"
-                />
+                <ShieldCheck size={13} className="text-slate-300 group-hover/item:text-emerald-500 transition-colors" />
                 HR Support
               </p>
               <p className="text-[11px] sm:text-xs text-slate-500 italic truncate">
@@ -152,7 +136,6 @@ const AssetCard = ({ asset }) => {
             </div>
           </div>
 
-          {/* Column 2: Dates */}
           <div className="space-y-3 md:border-l md:border-slate-100 md:pl-5">
             <div>
               <p className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1.5">
@@ -162,15 +145,11 @@ const AssetCard = ({ asset }) => {
               <div className="space-y-1.5">
                 <p className="text-[11px] sm:text-[13px] text-slate-600 flex justify-between gap-2">
                   <span className="text-slate-400 font-medium">Requested</span>
-                  <span className="font-semibold text-right">
-                    {formatDate(requestDate)}
-                  </span>
+                  <span className="font-semibold text-right">{formatDate(requestDate)}</span>
                 </p>
                 <p className="text-[11px] sm:text-[13px] text-slate-600 flex justify-between gap-2">
                   <span className="text-slate-400 font-medium">Assigned</span>
-                  <span className="font-semibold text-right">
-                    {formatDate(assignedDate)}
-                  </span>
+                  <span className="font-semibold text-right">{formatDate(assignedDate)}</span>
                 </p>
                 <p className="text-[11px] sm:text-[13px] text-rose-500 flex justify-between gap-2">
                   <span className="text-rose-300 font-medium">Return By</span>
@@ -182,6 +161,24 @@ const AssetCard = ({ asset }) => {
             </div>
           </div>
         </div>
+
+<div className="flex w-full gap-3 mt-4 md:mt-0 md:flex-row flex-col">
+  {status?.toLowerCase() === 'assigned' && assetType?.toLowerCase() === 'returnable' && (
+    <div className="mt-auto w-1/2">
+      <button className="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 px-6 rounded-full shadow-xl hover:shadow-2xl transition-all">
+        Return Asset
+      </button>
+    </div>
+  )}
+
+  <button
+    className="w-1/2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all"
+    onClick={handlePrint}
+  >
+    Print
+  </button>
+</div>
+
       </div>
     </motion.div>
   );

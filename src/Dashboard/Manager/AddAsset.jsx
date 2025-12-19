@@ -49,7 +49,7 @@ const AddAsset = () => {
   return (
     <div className="bg-white p-10 md:w-1/2 mx-auto rounded-lg shadow-lg">
       <div className="flex flex-wrap gap-5 items-center w-full max-md:max-w-full mb-10">
-        <div className="flex flex-wrap flex-1 shrink gap-5 items-center self-stretch my-auto basis-0 min-w-[240px] max-md:max-w-full">
+        <div className="flex flex-wrap flex-1 shrink gap-5 items-center self-stretch my-auto basis-0  max-md:max-w-full">
           <div className="flex relative flex-col justify-center self-stretch bg-gray-100 h-[70px] min-h-[70px] rounded-[16px] overflow-hidden w-[70px]">
             <div className="w-[100px] h-[100px] aspect-auto">
               <svg
