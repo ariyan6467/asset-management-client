@@ -27,6 +27,7 @@ import PaymentSuccessPage from './Dashboard/Manager/Payment/PaymentSuccess.jsx';
 import PaymentDeclinedPage from './Dashboard/Manager/Payment/PaymentCancel.jsx';
 import HrRoute from './Authantication/HrRoute.jsx';
 import MyProfile from './Dashboard/Employee/MyProfile/MyProfile.jsx';
+import MainDashBoard from './Dashboard/Main/MainDashBoard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
     children:[
    {
     path:"/dashboard",
+    Component:MainDashBoard
+   }
+   ,{
+    path:"asset-list",
   //  element:<HrRoute>
   //  <AssetList></AssetList>
   //  </HrRoute>,  

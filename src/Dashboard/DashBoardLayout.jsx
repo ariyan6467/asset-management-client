@@ -98,7 +98,7 @@ const DashBoardLayout = () => {
           </NavLink>
           {/* HR routes */}
          <div>
-            <NavLink to="/dashboard">
+            <NavLink to="/dashboard/asset-list">
               <button
                 className="btn btn-ghost btn-square tooltip tooltip-right"
                 data-tip="asset-list"

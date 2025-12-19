@@ -26,6 +26,7 @@
     "react-router-dom": "^7.10.1",
     "react-tooltip": "^5.30.0",
     "reactflow": "^11.11.4",
+    "recharts": "^3.6.0",
     "styled-components": "^6.1.19",
     "sweetalert2": "^11.26.4",
     "tailwindcss": "^4.1.17"
