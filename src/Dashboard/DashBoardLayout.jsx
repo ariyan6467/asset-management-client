@@ -3,7 +3,7 @@ import Logo from "../Page/Home/Navbar/Logo";
 import { NavLink, Outlet } from "react-router";
 import { GiUpgrade } from "react-icons/gi";
 import { GrUserWorker } from "react-icons/gr";
-import { VscAccount, VscRequestChanges } from "react-icons/vsc";
+import { VscAccount, VscGitPullRequestGoToChanges, VscRequestChanges } from "react-icons/vsc";
 import { MdAddModerator } from "react-icons/md";
 import { CiViewList } from "react-icons/ci";
 import { AuthContext } from "../Authantication/Authprovider";
@@ -11,6 +11,8 @@ import UseAuth from "../hook/UseAuth";
 import UseAxiosSecure from "../hook/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import UseRole from "../hook/UseRole";
+import { GrGroup } from "react-icons/gr";
+import { AiOutlinePropertySafety } from "react-icons/ai";
 // --- Utility Components for Reusability ---
 
 /**
@@ -61,9 +63,9 @@ const ToolListItem = ({ icon, title, description }) => (
 
 const DashBoardLayout = () => {
   const { user } = UseAuth();
-  const   axiosSecure= UseAxiosSecure();  
-  const { userRole} = UseRole();
-  console.log( userRole,user);
+  const axiosSecure = UseAxiosSecure();
+  const { userRole } = UseRole();
+  console.log(userRole, user);
   // const {
   //   isLoading,
   //   isError,
@@ -84,9 +86,11 @@ const DashBoardLayout = () => {
     <div className="flex h-screen overflow-hidden bg-gray-100">
       {/* === 1. Left Sidebar (Navigation) === */}
       <aside className="w-16 bg-base-300 flex flex-col items-center py-4 border-r border-gray-300 z-10 shadow-lg">
-        <div className="mb-8">
-          <Logo></Logo>
-        </div>
+        <NavLink to="/">
+          <div className="mb-8">
+            <Logo></Logo>
+          </div>
+        </NavLink>
         <nav className="flex flex-col space-y-4">
           <NavLink to="/">
             <button
@@ -97,7 +101,7 @@ const DashBoardLayout = () => {
             </button>
           </NavLink>
           {/* HR routes */}
-         <div>
+          <div>
             <NavLink to="/dashboard/asset-list">
               <button
                 className="btn btn-ghost btn-square tooltip tooltip-right"
@@ -139,19 +143,17 @@ const DashBoardLayout = () => {
                 <GiUpgrade />
               </button>
             </NavLink>
-           
-          </div> 
-          
+          </div>
           {/* Divider */}
           <div className="border-t border-gray-400 w-1/2 mx-auto"></div>
           {/* Employee Routes */}
-          : <div>
+          <div>
             <NavLink
               to="/dashboard/my-asset"
               className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
               data-tip="my-asset"
             >
-              <button>N</button>
+            <AiOutlinePropertySafety />
             </NavLink>
 
             <NavLink
@@ -159,7 +161,7 @@ const DashBoardLayout = () => {
               className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
               data-tip="request-asset"
             >
-              <button>G</button>
+              <VscGitPullRequestGoToChanges />
             </NavLink>
 
             <NavLink
@@ -167,26 +169,19 @@ const DashBoardLayout = () => {
               className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
               data-tip="my-team"
             >
-              <button>D</button>
+              <GrGroup />
             </NavLink>
 
-            <NavLink
-              to="/dashboard/profile"
-              className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
-              data-tip="profile"
-            >
-              <button>D</button>
-            </NavLink>
-             <NavLink to="/dashboard/my-profile">
+            <NavLink to="/dashboard/my-profile">
               <button
                 className="btn btn-ghost btn-square tooltip tooltip-right"
                 data-tip="upgrade-package"
               >
-               <VscAccount />
+                <VscAccount />
               </button>
             </NavLink>
           </div>
-         {/* {
+          {/* {
          role === "Employee" && ( <div>
             <NavLink
               to="/dashboard/my-asset"

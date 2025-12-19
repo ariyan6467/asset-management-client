@@ -23,48 +23,60 @@ const RightNav = () => {
   }
   return (
     <StyledWrapper>
-      <div className="button-container">
-        <button className="button" data-tip="Homepage">
-          <NavLink
-            to="/"
-            className="text-gray-600 font-serif  hover:text-white font-medium transition duration-200 text-sm"
-          >
-            <FaHome />
-          </NavLink>
-        </button>
-        <button className="button">
-          <NavLink
-            to="/employee-login"
-            className="text-gray-600 font-serif  hover:text-white font-medium transition duration-200 text-sm"
-          >
-            <BsPersonWorkspace />
-          </NavLink>
-        </button>
-        <button className="button">
-          <NavLink
-            to="/hr-login"
-            className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
-          >
-            <FcManager />
-          </NavLink>
-        </button>
-        <button className="button">
-          <NavLink to="/normal-login">
-            <IoIosLogIn />
-          </NavLink>
-        </button>
-       
-        <button 
-        onClick={signOut}
-        className="button">
-          <CiLogout />
-        </button>
-         <button className="button">
-          <NavLink to="/dashboard">
-           <MdDashboard />
-          </NavLink>
-        </button>
-      </div>
+     <div className="button-container">
+  {/* Home Button */}
+  <button className="button" data-tip="Home">
+    <NavLink
+      to="/"
+      className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
+    >
+      <FaHome />
+    </NavLink>
+  </button>
+
+  {/* Employee Login Button */}
+  <button className="button" data-tip="Employee Portal">
+    <NavLink
+      to="/employee-login"
+      className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
+    >
+      <BsPersonWorkspace />
+    </NavLink>
+  </button>
+
+  {/* HR Login Button */}
+  <button className="button" data-tip="HR Management">
+    <NavLink
+      to="/hr-login"
+      className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
+    >
+      <FcManager />
+    </NavLink>
+  </button>
+
+  {/* Login Button */}
+  <button className="button" data-tip="User Login">
+    <NavLink to="/normal-login">
+      <IoIosLogIn />
+    </NavLink>
+  </button>
+
+  {/* Logout Button */}
+  <button 
+    onClick={signOut}
+    className="button" 
+    data-tip="Sign Out"
+  >
+    <CiLogout />
+  </button>
+
+  {/* Dashboard Button */}
+  <button className="button" data-tip="Dashboard">
+    <NavLink to="/dashboard">
+      <MdDashboard />
+    </NavLink>
+  </button>
+</div>
     </StyledWrapper>
   );
 };
