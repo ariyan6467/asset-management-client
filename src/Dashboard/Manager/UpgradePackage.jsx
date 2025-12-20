@@ -20,6 +20,7 @@ const FeatureListItem = ({ children, isIncluded = true }) => {
         }`}
       />
       <span className="text-sm">{children}</span>
+      
     </li>
   );
 };
@@ -61,6 +62,7 @@ const PricingCard = ({
     window.location.href = res?.data?.url;
   }
   return (
+  <>
     <div className={` relative p-8 rounded-2xl flex flex-col ${cardClasses}`}>
       {/* Most Popular Badge */}
       {isPopular && (
@@ -130,7 +132,11 @@ const PricingCard = ({
           {buttonText}
         </button>
       </div>
+      
     </div>
+   
+  </>
+  
   );
 };
 

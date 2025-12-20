@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import UseRole from "../hook/UseRole";
 import { GrGroup } from "react-icons/gr";
 import { AiOutlinePropertySafety } from "react-icons/ai";
+import HistoryBth from "./Manager/Payment/PaymentHistory/HistoryBth";
 // --- Utility Components for Reusability ---
 
 /**
@@ -242,23 +243,11 @@ const DashBoardLayout = () => {
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header/Search */}
         <header className="p-3 bg-white border-b border-gray-300 flex justify-end">
-          <div className="w-64">
-            <label className="input input-bordered flex items-center gap-2 bg-base-100 input-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="w-4 h-4 opacity-70"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.965 11.026a5 5 0 0 1-7.83-4.226 5 5 0 0 1 7.83 4.226ZM13.804 14.129 11 11.326l.707-.707 2.804 2.803-.707.707Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <input type="text" className="grow" placeholder="Search" />
-            </label>
+          <NavLink to="/dashboard/payment-history">
+            <div className="w-64">
+           <HistoryBth></HistoryBth>
           </div>
+          </NavLink>
         </header>
 
         {/* Workflow Canvas Area */}

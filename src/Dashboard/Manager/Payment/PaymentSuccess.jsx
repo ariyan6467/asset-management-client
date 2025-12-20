@@ -1,5 +1,5 @@
 // PaymentSuccessPage.js
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 // We'll use the HiOutlineHome icon, but you can choose any icon library.
 import { HiOutlineHome } from "react-icons/hi";
 import { NavLink, useSearchParams } from "react-router";
@@ -17,16 +17,18 @@ function PaymentSuccessPage() {
   const sessionId = searchParams.get('session_id')
   console.log(sessionId);
 const axiosSecure = UseAxiosSecure();
-
+const isExist = useRef(false);
 useEffect(()=>{
-     if(sessionId){
+    
+       if(!sessionId || isExist.current === true) return;
+     isExist.current = true;
         axiosSecure.patch(`/package-payment-successful?session_id=${sessionId}`)
         .then(res => {
             console.log(res.data);
         })
-     }
-
-},[sessionId,axiosSecure])
+    
+  console.log(isExist.current)
+},[sessionId,axiosSecure,isExist])
 
 
 

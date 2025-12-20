@@ -30,6 +30,7 @@ import MyProfile from './Dashboard/Employee/MyProfile/MyProfile.jsx';
 import MainDashBoard from './Dashboard/Main/MainDashBoard.jsx';
 import PrivateRoutes from './Authantication/PrivateRoutes.jsx';
 import EmployeeRoutes from './Authantication/EmployeeRoutes.jsx';
+import History from './Dashboard/Manager/Payment/PaymentHistory/History.jsx';
 
 
 const router = createBrowserRouter([
@@ -95,6 +96,13 @@ const router = createBrowserRouter([
       path:"upgrade-package",
       element:<HrRoute>
       <UpgradePackage></UpgradePackage>
+      </HrRoute>
+      
+    },
+    {
+      path:"payment-history",
+      element:<HrRoute>
+      <History></History>
       </HrRoute>
       
     },
