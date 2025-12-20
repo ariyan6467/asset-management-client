@@ -3,7 +3,11 @@ import Logo from "../Page/Home/Navbar/Logo";
 import { NavLink, Outlet } from "react-router";
 import { GiUpgrade } from "react-icons/gi";
 import { GrUserWorker } from "react-icons/gr";
-import { VscAccount, VscGitPullRequestGoToChanges, VscRequestChanges } from "react-icons/vsc";
+import {
+  VscAccount,
+  VscGitPullRequestGoToChanges,
+  VscRequestChanges,
+} from "react-icons/vsc";
 import { MdAddModerator } from "react-icons/md";
 import { CiViewList } from "react-icons/ci";
 import { AuthContext } from "../Authantication/Authprovider";
@@ -65,7 +69,7 @@ const DashBoardLayout = () => {
   const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
   const { userRole } = UseRole();
-  console.log(userRole, user);
+  console.log(userRole);
   // const {
   //   isLoading,
   //   isError,
@@ -101,7 +105,8 @@ const DashBoardLayout = () => {
             </button>
           </NavLink>
           {/* HR routes */}
-          <div>
+          {
+            userRole === "HR Manager" &&  <div>
             <NavLink to="/dashboard/asset-list">
               <button
                 className="btn btn-ghost btn-square tooltip tooltip-right"
@@ -144,16 +149,19 @@ const DashBoardLayout = () => {
               </button>
             </NavLink>
           </div>
+          }
+         
           {/* Divider */}
           <div className="border-t border-gray-400 w-1/2 mx-auto"></div>
           {/* Employee Routes */}
-          <div>
+          {
+            userRole === "Employee" &&  <div>
             <NavLink
               to="/dashboard/my-asset"
               className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
               data-tip="my-asset"
             >
-            <AiOutlinePropertySafety />
+              <AiOutlinePropertySafety />
             </NavLink>
 
             <NavLink
@@ -181,6 +189,8 @@ const DashBoardLayout = () => {
               </button>
             </NavLink>
           </div>
+          }
+         
           {/* {
          role === "Employee" && ( <div>
             <NavLink

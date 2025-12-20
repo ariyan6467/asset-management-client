@@ -29,6 +29,7 @@ import HrRoute from './Authantication/HrRoute.jsx';
 import MyProfile from './Dashboard/Employee/MyProfile/MyProfile.jsx';
 import MainDashBoard from './Dashboard/Main/MainDashBoard.jsx';
 import PrivateRoutes from './Authantication/PrivateRoutes.jsx';
+import EmployeeRoutes from './Authantication/EmployeeRoutes.jsx';
 
 
 const router = createBrowserRouter([
@@ -66,56 +67,57 @@ const router = createBrowserRouter([
    }
    ,{
     path:"asset-list",
-  //  element:<HrRoute>
-  //  <AssetList></AssetList>
-  //  </HrRoute>,  
-  element:<AssetList></AssetList>
+   element:<HrRoute>
+   <AssetList></AssetList>
+   </HrRoute>,  
+  
     },
     {
       path:"add-asset",
-      // element:<HrRoute>
-      // <AddAsset></AddAsset>
-      // </HrRoute>,
-      element:<AddAsset></AddAsset>
+      element:<HrRoute>
+      <AddAsset></AddAsset>
+      </HrRoute>,
+      
     },
     {
       path:"all-request",
-      // element:<HrRoute><AllRequest></AllRequest></HrRoute>,
-      element:<AllRequest></AllRequest>
+       element:<HrRoute><AllRequest></AllRequest></HrRoute>,
+     
     },
     {
       path:"my-employee",
-    //  element:<HrRoute>
-    //  <MyEmployee></MyEmployee>
-    //  </HrRoute>,
-    element:<MyEmployee></MyEmployee>
+     element:<HrRoute>
+     <MyEmployee></MyEmployee>
+     </HrRoute>,
+   
     },
     {
       path:"upgrade-package",
-      // element:<HrRoute>
-      // <UpgradePackage></UpgradePackage>
-      // </HrRoute>
-      element:<UpgradePackage></UpgradePackage>
+      element:<HrRoute>
+      <UpgradePackage></UpgradePackage>
+      </HrRoute>
+      
     },
     {
       path:"my-profile",
-      Component:MyProfile
+      element:<EmployeeRoutes><MyProfile></MyProfile></EmployeeRoutes>
     },
     {
        path:"my-asset",
-      Component:MyAsset
-    },
+       element:<EmployeeRoutes><MyAsset></MyAsset></EmployeeRoutes>
+     },
     {
        path:"request-asset",
-      Component:RequestAsset
+       element:<EmployeeRoutes><RequestAsset></RequestAsset></EmployeeRoutes>
     },
     {
        path:"my-team",
-      Component:MyTeam
+      element:<EmployeeRoutes><MyTeam></MyTeam></EmployeeRoutes>
     },
     {
        path:"profile",
-      Component:Profile
+       element:<EmployeeRoutes><Profile></Profile></EmployeeRoutes>
+      
     },
     {
       path:"package-payment-successful",
