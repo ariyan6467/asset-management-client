@@ -6,7 +6,7 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Root from './Root.jsx';
 import Home from './Page/Home/Home.jsx';
-
+import ErrorPage from './Authantication/ErrorPage.jsx';
 import HR from './Page/Authantication/HR/HR.jsx';
 import Normal from './Page/Authantication/NormalPublic/Normal.jsx';
 import EmployeeSignupForm from './Page/Authantication/Employee/Employee.jsx';
@@ -37,6 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component:Root,
+     errorElement: <ErrorPage />,
     children:[
       {
        index:true,
@@ -61,6 +62,7 @@ const router = createBrowserRouter([
    element:<PrivateRoutes>
     <DashBoardLayout></DashBoardLayout>
    </PrivateRoutes>,
+    errorElement: <ErrorPage />,
     children:[
    {
     path:"/dashboard",
