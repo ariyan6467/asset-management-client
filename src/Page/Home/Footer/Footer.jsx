@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Dribbble } from 'lucide-react'; // Icons for contact and social media
 import NavbarLogo from '../Navbar/NavbarLogo';
+import SocialIcons from './SocialIcons';
 
 // --- Footer Link Group Component ---
 const LinkGroup = ({ title, links }) => (
@@ -93,17 +94,9 @@ const FooterSection = () => {
 
           {/* Social Media Icons */}
           <div className="flex space-x-3">
-            {[Linkedin, Twitter, Facebook, Dribbble].map((Icon, index) => (
-              <a
-                key={index}
-                href="#"
-                aria-label={Icon.name}
-                className="p-2 rounded-full bg-gray-800 text-blue-300 hover:bg-blue-600 hover:text-white transition-colors duration-200"
-              >
-                <Icon className="w-5 h-5" />
-              </a>
-            ))}
+            <SocialIcons></SocialIcons>
           </div>
+          
         </div>
       </div>
     </footer>
