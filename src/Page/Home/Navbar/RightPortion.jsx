@@ -10,7 +10,7 @@ import { CiLogout } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
 import UseAuth from "../../../hook/UseAuth";
 const RightNav = () => {
-  const { handleLogeOut } = UseAuth();
+  const { handleLogeOut,user } = UseAuth();
   console.log(handleLogeOut);
   function signOut(){
      handleLogeOut()
@@ -71,11 +71,14 @@ const RightNav = () => {
   </button>
 
   {/* Dashboard Button */}
-  <button className="button" data-tip="Dashboard">
+  {
+    user !== null && ( <button className="button" data-tip="Dashboard">
     <NavLink to="/dashboard">
       <MdDashboard />
     </NavLink>
-  </button>
+  </button>)
+  }
+ 
 </div>
     </StyledWrapper>
   );

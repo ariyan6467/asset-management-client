@@ -11,7 +11,7 @@ const UseAuth = () => {
       handleSignIn: () => {},
       handleLogeOut: () => {},
       InsertInfo: () => {},
-    
+     
      setPackagePrice: () => {},
       handleGoogleSignIn: () => {},
       handleGoogleSignUp: () => {},

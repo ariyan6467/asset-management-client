@@ -6,6 +6,7 @@ import MyEmployeeCard from "./MyEmployeeCards";
 
 const MyEmployee = () => {
   const { user } = UseAuth();
+  console.log(user.email);
   const axiosSecure = UseAxiosSecure();
   const { data: employees = [], refetch } = useQuery({
     queryKey: ["my-employees"],

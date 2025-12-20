@@ -59,7 +59,8 @@ const authInfo = {
   handleSignIn,
   handleGoogleSignIn,
   handleGoogleSignUp,
-  packagePrice,setPackagePrice
+  packagePrice,setPackagePrice,
+  loading,setLoading
 }
     return (
         <AuthContext.Provider value={authInfo}>

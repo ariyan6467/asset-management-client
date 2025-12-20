@@ -28,6 +28,8 @@ import PaymentDeclinedPage from './Dashboard/Manager/Payment/PaymentCancel.jsx';
 import HrRoute from './Authantication/HrRoute.jsx';
 import MyProfile from './Dashboard/Employee/MyProfile/MyProfile.jsx';
 import MainDashBoard from './Dashboard/Main/MainDashBoard.jsx';
+import PrivateRoutes from './Authantication/PrivateRoutes.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -54,7 +56,9 @@ const router = createBrowserRouter([
   },
   {
     path:"dashboard",
-    Component:DashBoardLayout,
+   element:<PrivateRoutes>
+    <DashBoardLayout></DashBoardLayout>
+   </PrivateRoutes>,
     children:[
    {
     path:"/dashboard",
