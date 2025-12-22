@@ -9,77 +9,79 @@ import { AuthContext } from "../../../Authantication/Authprovider";
 import { CiLogout } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
 import UseAuth from "../../../hook/UseAuth";
+import DropDownProfile from "./DropDownProfile";
 const RightNav = () => {
-  const { handleLogeOut,user } = UseAuth();
-  console.log(handleLogeOut);
-  function signOut(){
-     handleLogeOut()
-     .then(()=>{
-      alert("signout successfull")
-     })
-     .catch((error)=> {
-      console.error(error.message);
-     })
+  const { handleLogeOut, user } = UseAuth();
+  // console.log(user);
+  function signOut() {
+    handleLogeOut()
+      .then(() => {
+        alert("signout successfull");
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   }
   return (
     <StyledWrapper>
-     <div className="button-container">
-  {/* Home Button */}
-  <button className="button" data-tip="Home">
-    <NavLink
-      to="/"
-      className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
-    >
-      <FaHome />
-    </NavLink>
-  </button>
+      <div className="button-container">
+        {/* Home Button */}
+        <button className="button" data-tip="Home">
+          <NavLink
+            to="/"
+            className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
+          >
+            <FaHome />
+          </NavLink>
+        </button>
 
-  {/* Employee Login Button */}
-  <button className="button" data-tip="Employee Portal">
-    <NavLink
-      to="/employee-login"
-      className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
-    >
-      <BsPersonWorkspace />
-    </NavLink>
-  </button>
+        {/* Employee Login Button */}
+        <button className="button" data-tip="Employee Portal">
+          <NavLink
+            to="/employee-login"
+            className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
+          >
+            <BsPersonWorkspace />
+          </NavLink>
+        </button>
 
-  {/* HR Login Button */}
-  <button className="button" data-tip="HR Management">
-    <NavLink
-      to="/hr-login"
-      className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
-    >
-      <FcManager />
-    </NavLink>
-  </button>
+        {/* HR Login Button */}
+        <button className="button" data-tip="HR Management">
+          <NavLink
+            to="/hr-login"
+            className="text-gray-600 font-serif hover:text-white font-medium transition duration-200 text-sm"
+          >
+            <FcManager />
+          </NavLink>
+        </button>
 
-  {/* Login Button */}
-  <button className="button" data-tip="User Login">
-    <NavLink to="/normal-login">
-      <IoIosLogIn />
-    </NavLink>
-  </button>
+        {/* Login Button */}
+        <button className="button" data-tip="User Login">
+          <NavLink to="/normal-login">
+            <IoIosLogIn />
+          </NavLink>
+        </button>
 
-  {/* Logout Button */}
-  <button 
-    onClick={signOut}
-    className="button" 
-    data-tip="Sign Out"
-  >
-    <CiLogout />
-  </button>
+        {/* Logout Button */}
+        <button onClick={signOut} className="button" data-tip="Sign Out">
+          <CiLogout />
+        </button>
 
-  {/* Dashboard Button */}
-  {
-    user !== null && ( <button className="button" data-tip="Dashboard">
-    <NavLink to="/dashboard">
-      <MdDashboard />
-    </NavLink>
-  </button>)
-  }
- 
-</div>
+        {/* Dashboard Button */}
+        {user !== null && (
+          <div className="flex">
+            {/* Dashboards BTn */}
+            <button className="button" data-tip="Dashboard">
+              <NavLink to="/dashboard">
+                <MdDashboard />
+              </NavLink>
+            </button>
+            {/* profile + dropDown */}
+        <DropDownProfile></DropDownProfile>
+
+          </div>
+        )}
+      </div>
     </StyledWrapper>
   );
 };
@@ -88,7 +90,7 @@ const StyledWrapper = styled.div`
   .button-container {
     display: flex;
     background-color: #38b2ac; /* Teal-400 color */
-    width: 250px;
+    padding: 5px 10px;
     height: 40px;
     align-items: center;
     justify-content: space-around;

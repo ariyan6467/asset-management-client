@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavbarLogo from "./NavbarLogo";
 import { NavLink } from "react-router";
 import RightNav from "./RightPortion";
+import { FaHome } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,12 +30,12 @@ const Navbar = () => {
 
         {/* Mobile Menu and Login Button Wrapper */}
         <div className="sm:hidden flex items-center">
-          <button className="text-white hover:text-blue-200 font-semibold py-1.5 px-4 rounded-lg transition duration-200 text-sm mr-2">
+          <button className=" text-blue-500 hover:text-blue-200 font-semibold py-1.5 px-4 rounded-lg transition duration-200 text-sm mr-2">
             Login
           </button>
           <button
             id="menu-button"
-            className="text-white focus:outline-none"
+            className="text-blue-500 focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {/* Hamburger Icon */}
@@ -85,18 +86,22 @@ const Navbar = () => {
           isMobileMenuOpen ? "block" : "hidden"
         } sm:hidden bg-[#064BB5] w-full border-t border-blue-400/30 py-4 absolute top-full left-0 shadow-xl`}
       >
-        <a
-          href="#"
-          className="block px-8 py-3 text-white hover:bg-white/10 font-medium"
-        >
-          Home
-        </a>
-        <a
-          href="#"
-          className="block px-8 py-3 text-white hover:bg-white/10 font-medium"
-        >
-          Join as Employee
-        </a>
+       
+                 <NavLink
+                   to="/"
+                   className="text-white font-serif  font-medium transition duration-200 text-sm"
+                 >
+                   Home
+                 </NavLink>
+              
+    
+                <NavLink
+                  to="/employee-login"
+                  className="text-white font-serif hover:text-white font-medium transition duration-200 text-sm"
+                >
+                 Join as Employee
+                </NavLink>
+             
         <a
           href="#"
           className="block px-8 py-3 text-white hover:bg-white/10 font-medium"
