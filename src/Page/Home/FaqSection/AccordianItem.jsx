@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FAQ.css'; // Necessary for the conditional styling
+import './Faq.css'; // Necessary for the conditional styling
 
 const AccordionItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
