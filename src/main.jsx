@@ -31,6 +31,7 @@ import MainDashBoard from './Dashboard/Main/MainDashBoard.jsx';
 import PrivateRoutes from './Authantication/PrivateRoutes.jsx';
 import EmployeeRoutes from './Authantication/EmployeeRoutes.jsx';
 import History from './Dashboard/Manager/Payment/PaymentHistory/History.jsx';
+import ProfileHR from './Dashboard/Manager/ProfileHR.jsx';
 
 
 const router = createBrowserRouter([
@@ -54,6 +55,12 @@ const router = createBrowserRouter([
       {
         path:"normal-login",
         Component:Normal
+      },
+      {
+        path:"hr-profile",
+        element:<PrivateRoutes>
+          <ProfileHR></ProfileHR>
+        </PrivateRoutes>
       }
     ]
   },
@@ -101,6 +108,12 @@ const router = createBrowserRouter([
       </HrRoute>
       
     },
+     {
+        path:"hr-profile",
+        element:<HrRoute>
+          <ProfileHR></ProfileHR>
+         </HrRoute>
+      },
     {
       path:"payment-history",
       element:<HrRoute>

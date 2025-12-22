@@ -3,10 +3,32 @@ import NavbarLogo from "./NavbarLogo";
 import { NavLink } from "react-router";
 import RightNav from "./RightPortion";
 import { FaHome } from "react-icons/fa";
+import { BsPersonWorkspace } from "react-icons/bs";
+import { FcManager } from "react-icons/fc";
+import { IoIosLogIn } from "react-icons/io";
+import { CiLogout } from "react-icons/ci";
+import { MdDashboard } from "react-icons/md";
+import DropDownProfile from "./DropDownProfile";
+import UseAuth from "../../../hook/UseAuth";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+   const { handleLogeOut, user } = UseAuth();
+
+  function signOut() {
+    handleLogeOut()
+      .then(() => {
+        alert("signout successfull");
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,9 +52,7 @@ const Navbar = () => {
 
         {/* Mobile Menu and Login Button Wrapper */}
         <div className="sm:hidden flex items-center">
-          <button className=" text-blue-500 hover:text-blue-200 font-semibold py-1.5 px-4 rounded-lg transition duration-200 text-sm mr-2">
-            Login
-          </button>
+         
           <button
             id="menu-button"
             className="text-blue-500 focus:outline-none"
@@ -87,27 +107,67 @@ const Navbar = () => {
         } sm:hidden bg-[#064BB5] w-full border-t border-blue-400/30 py-4 absolute top-full left-0 shadow-xl`}
       >
        
-                 <NavLink
-                   to="/"
-                   className="text-white font-serif  font-medium transition duration-200 text-sm"
-                 >
-                   Home
-                 </NavLink>
-              
-    
-                <NavLink
-                  to="/employee-login"
-                  className="text-white font-serif hover:text-white font-medium transition duration-200 text-sm"
-                >
-                 Join as Employee
-                </NavLink>
-             
-        <a
-          href="#"
-          className="block px-8 py-3 text-white hover:bg-white/10 font-medium"
-        >
-          Join as HR Manager
-        </a>
+ <div className="flex flex-col gap-2 px-6">
+          <NavLink
+            to="/"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-white hover:bg-white/10 font-medium"
+          >
+            <FaHome className="text-lg" />
+            <span>Home</span>
+          </NavLink>
+
+          <NavLink
+            to="/employee-login"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-white hover:bg-white/10 font-medium"
+          >
+            <BsPersonWorkspace className="text-lg" />
+            <span>Join as Employee</span>
+          </NavLink>
+
+          <NavLink
+            to="/hr-login"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-white hover:bg-white/10 font-medium"
+          >
+            <FcManager className="text-lg" />
+            <span>Join as HR Manager</span>
+          </NavLink>
+
+          <NavLink
+            to="/normal-login"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-white hover:bg-white/10 font-medium"
+          >
+            <IoIosLogIn className="text-lg" />
+            <span>User Login</span>
+          </NavLink>
+
+          {user !== null && (
+            <>
+              <NavLink
+                to="/dashboard"
+                className="flex items-center gap-3 rounded-md px-3 py-2 text-white hover:bg-white/10 font-medium"
+              >
+                <MdDashboard className="text-lg" />
+                <span>Dashboard</span>
+              </NavLink>
+
+              <button
+                type="button"
+                onClick={signOut}
+                className="flex items-center gap-3 rounded-md px-3 py-2 text-white hover:bg-white/10 font-medium text-left"
+              >
+                <CiLogout className="text-lg" />
+                <span>Sign Out</span>
+              </button>
+
+              <div className="flex items-center gap-3 px-3 py-2">
+                <span className="text-sm text-white/80">Profile</span>
+                <DropDownProfile />
+              </div>
+            </>
+          )}
+        </div>
+
+
       </div>
     </nav>
   );

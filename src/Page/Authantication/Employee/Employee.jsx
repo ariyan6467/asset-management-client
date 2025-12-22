@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import Logo from "../../Home/Navbar/Logo";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Authantication/Authprovider";
 import axios from "axios";
@@ -13,7 +13,7 @@ const EmployeeSignupForm = () => {
   const axiosSecure = UseAxiosSecure();
   const { handleRegister, InsertInfo, user, setuser, handleGoogleSignUp } = UseAuth();
   console.log(user);
-
+ const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -53,6 +53,7 @@ const EmployeeSignupForm = () => {
              status:"not-affiliated",
               
               profileImg: imgRes.data.data.display_url,
+              password :parseInt( data.password),
             };
 
       axiosSecure.post("/users",userInfo)
@@ -96,6 +97,7 @@ const EmployeeSignupForm = () => {
                 alert("Registration failed: " + err.message);
               });
             setuser(res.user);
+            navigate("/");
           })
           .catch((imgErr) => {
             console.error("Image upload error:", imgErr.message);

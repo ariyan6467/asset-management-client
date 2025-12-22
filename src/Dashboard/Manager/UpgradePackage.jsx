@@ -53,7 +53,7 @@ const PricingCard = ({
     const paymentInfo = {
       price: price,
       packageName: plan,
-      employeeLimit: employeeLimit,
+      employeeLimit: parseInt(employeeLimit),
       email:user?.email,
     };
 

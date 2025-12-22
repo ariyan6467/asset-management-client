@@ -10,18 +10,11 @@ import { CiLogout } from "react-icons/ci";
 import { MdDashboard } from "react-icons/md";
 import UseAuth from "../../../hook/UseAuth";
 import DropDownProfile from "./DropDownProfile";
+import { RiLoginBoxFill } from "react-icons/ri";
 const RightNav = () => {
   const { handleLogeOut, user } = UseAuth();
   // console.log(user);
-  function signOut() {
-    handleLogeOut()
-      .then(() => {
-        alert("signout successfull");
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
+ 
   return (
     <StyledWrapper>
       <div className="button-container">
@@ -58,14 +51,11 @@ const RightNav = () => {
         {/* Login Button */}
         <button className="button" data-tip="User Login">
           <NavLink to="/normal-login">
-            <IoIosLogIn />
+            <RiLoginBoxFill />
           </NavLink>
         </button>
 
-        {/* Logout Button */}
-        <button onClick={signOut} className="button" data-tip="Sign Out">
-          <CiLogout />
-        </button>
+    
 
         {/* Dashboard Button */}
         {user !== null && (

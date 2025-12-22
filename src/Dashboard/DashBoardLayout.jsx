@@ -149,6 +149,14 @@ const DashBoardLayout = () => {
                 <GiUpgrade />
               </button>
             </NavLink>
+              <NavLink to="hr-profile">
+              <button
+                className="btn btn-ghost btn-square tooltip tooltip-right"
+                data-tip="Profile"
+              >
+                <VscAccount />
+              </button>
+            </NavLink>
           </div>
           }
          
@@ -184,7 +192,7 @@ const DashBoardLayout = () => {
             <NavLink to="/dashboard/my-profile">
               <button
                 className="btn btn-ghost btn-square tooltip tooltip-right"
-                data-tip="upgrade-package"
+                data-tip="Profile"
               >
                 <VscAccount />
               </button>

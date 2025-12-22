@@ -1,7 +1,9 @@
 import React from "react";
+import { NavLink } from "react-router";
 import UseAuth from "../../../hook/UseAuth";
 import UseRole from "../../../hook/UseRole";
-import { NavLink } from "react-router";
+
+// Icons
 import { VscAccount, VscGitPullRequestGoToChanges, VscRequestChanges } from "react-icons/vsc";
 import { GrGroup, GrUserWorker } from "react-icons/gr";
 import { AiOutlinePropertySafety } from "react-icons/ai";
@@ -13,153 +15,86 @@ const DropDownProfile = () => {
   const { handleLogeOut, user } = UseAuth();
   const { userRole } = UseRole();
 
-  function signOut() {
+  const signOut = () => {
     handleLogeOut()
-      .then(() => {
-        alert("Signout successful");
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
+      .then(() => alert("Signed out successfully"))
+      .catch((err) => console.error(err.message));
+  };
+
+  // Define links based on roles
+  const menuConfig = {
+    Employee: [
+      { to: "/dashboard/my-asset", label: "My Assets", icon: <AiOutlinePropertySafety /> },
+      { to: "/dashboard/request-asset", label: "Request Asset", icon: <VscGitPullRequestGoToChanges /> },
+      { to: "/dashboard/my-team", label: "My Team", icon: <GrGroup /> },
+      { to: "/dashboard/my-profile", label: "Profile", icon: <VscAccount /> },
+    ],
+    "HR Manager": [
+      { to: "/dashboard/asset-list", label: "Asset List", icon: <CiViewList /> },
+      { to: "/dashboard/add-asset", label: "Add Asset", icon: <MdAddModerator /> },
+      { to: "/dashboard/all-request", label: "All Requests", icon: <VscRequestChanges /> },
+      { to: "/dashboard/my-employee", label: "Employees", icon: <GrUserWorker /> },
+      { to: "/dashboard/upgrade-package", label: "Upgrade", icon: <GiUpgrade /> },
+      { to: "hr-profile", label: "Profile", icon: <VscAccount /> },
+    ],
+  };
+
+  const activeLinks = menuConfig[userRole] || [];
 
   return (
-    <div className="avatar w-[30px] h-[30px] my-auto dropdown dropdown-end">
+    <div className="dropdown dropdown-end">
+      {/* Trigger: Profile Image */}
       <div
         tabIndex={0}
         role="button"
-        className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2"
+        className="avatar btn btn-ghost btn-circle hover:ring-2 ring-primary ring-offset-2 transition-all duration-300"
       >
-        <img
-          src={user?.photoURL}
-          alt="Profile"
-          className="cursor-pointer"
-        />
+        <div className="w-10 rounded-full">
+          <img src={user?.photoURL || "https://via.placeholder.com/150"} alt="Profile" />
+        </div>
       </div>
 
-      {/* Dropdown Menu */}
-      {userRole === "Employee" && (
-        <ul
-          tabIndex="-1"
-          className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-        >
-          <li>
-            <NavLink
-              to="/dashboard/my-asset"
-              className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
-              data-tip="My Asset"
-            >
-              <AiOutlinePropertySafety />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/request-asset"
-              className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
-              data-tip="Request Asset"
-            >
-              <VscGitPullRequestGoToChanges />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/my-team"
-              className="btn btn-ghost btn-square text-lg tooltip tooltip-right"
-              data-tip="My Team"
-            >
-              <GrGroup />
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/my-profile">
-              <button
-                className="btn btn-ghost btn-square tooltip tooltip-right"
-                data-tip="My Profile"
-              >
-                <VscAccount />
-              </button>
-            </NavLink>
-          </li>
-          <li>
-            <button
-              onClick={signOut}
-              className="btn btn-ghost btn-square tooltip tooltip-right"
-              data-tip="Sign Out"
-            >
-              <CiLogout />
-            </button>
-          </li>
-        </ul>
-      )}
+      {/* Dropdown Content */}
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu menu-sm mt-3 z-[100] p-2 shadow-2xl bg-base-100 border border-base-200 rounded-xl w-64 animate-in fade-in zoom-in duration-200"
+      >
+        {/* User Info Header */}
+        <li className="px-4 py-3 mb-2 border-b border-base-200">
+          <p className="text-xs font-semibold text-primary uppercase tracking-wider">{userRole}</p>
+          <p className="text-sm font-bold truncate">{user?.displayName || "User Name"}</p>
+          <p className="text-xs opacity-60 truncate">{user?.email}</p>
+        </li>
 
-      {/* Dropdown for HR Manager */}
-      {userRole === "HR Manager" && (
-        <ul
-          tabIndex="-1"
-          className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-        >
-          <li>
-            <NavLink to="/dashboard/asset-list">
-                         <button
-                           className="btn btn-ghost btn-square tooltip tooltip-right"
-                           data-tip="asset-list"
-                         >
-                           <CiViewList />
-                         </button>
-                       </NavLink>
-           
-          </li>
-          <li>
-             <NavLink to="/dashboard/add-asset">
-                          <button
-                            className="btn btn-ghost btn-square tooltip tooltip-right"
-                            data-tip="add-asset"
-                          >
-                            <MdAddModerator />
-                          </button>
-                        </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/all-request">
-                         <button
-                           className="btn btn-ghost btn-square tooltip tooltip-right"
-                           data-tip="all-request"
-                         >
-                           <VscRequestChanges />
-                         </button>
-                       </NavLink>
-          </li>
-          <li>
-             <NavLink to="/dashboard/my-employee">
-                          <button
-                            className="btn btn-ghost btn-square tooltip tooltip-right"
-                            data-tip="my-employee"
-                          >
-                            <GrUserWorker />
-                          </button>
-                        </NavLink>
-          </li>
-          <li>
-             <NavLink to="/dashboard/upgrade-package">
-                          <button
-                            className="btn btn-ghost btn-square tooltip tooltip-right"
-                            data-tip="upgrade-package"
-                          >
-                            <GiUpgrade />
-                          </button>
-                        </NavLink>
-          </li>
-          <li>
-             <button
-              onClick={signOut}
-              className="btn btn-ghost btn-square tooltip tooltip-right"
-              data-tip="Sign Out"
+        {/* Dynamic Navigation Links */}
+        {activeLinks.map((item) => (
+          <li key={item.to} className="my-0.5">
+            <NavLink
+              to={item.to}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
+                  isActive ? "bg-primary text-primary-content" : "hover:bg-base-200"
+                }`
+              }
             >
-              <CiLogout />
-            </button>
+              <span className="text-lg">{item.icon}</span>
+              <span className="font-medium">{item.label}</span>
+            </NavLink>
           </li>
-        </ul>
-      )}
+        ))}
+
+        {/* Action Section */}
+        <div className="divider my-1 opacity-50"></div>
+        <li>
+          <button
+            onClick={signOut}
+            className="flex items-center gap-3 px-4 py-2 text-error hover:bg-error/10 rounded-lg transition-colors w-full text-left"
+          >
+            <CiLogout className="text-lg" />
+            <span className="font-medium">Sign Out</span>
+          </button>
+        </li>
+      </ul>
     </div>
   );
 };

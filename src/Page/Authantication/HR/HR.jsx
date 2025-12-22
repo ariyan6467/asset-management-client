@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { use, useContext } from "react";
 import styled from "styled-components";
 import Logo from "../../Home/Navbar/Logo";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Authantication/Authprovider";
 import axios from "axios";
@@ -9,6 +9,7 @@ import UseAxiosSecure from "../../../hook/UseAxiosSecure";
 import UseAuth from "../../../hook/UseAuth";
 
 const HR = () => {
+  const navigate = useNavigate();
   const { handleRegister, InsertInfo, user, setuser, handleGoogleSignUp } =
    UseAuth();
   const axiosSecure = UseAxiosSecure();
@@ -53,6 +54,7 @@ const HR = () => {
               currentEmployee: 0,
               subscription: "basic",
               logoURL: imgRes.data.data.display_url,
+              password: parseInt(data.password),
             };
 
             axiosSecure.post("/users", userInfo).then((res) => {
@@ -83,7 +85,9 @@ const HR = () => {
                 console.error(err.message);
                 alert("Registration failed: " + err.message);
               });
+              
             setuser(res.user);
+            navigate("/");
           })
           .catch((imgErr) => {
             console.error("Image upload error:", imgErr.message);
