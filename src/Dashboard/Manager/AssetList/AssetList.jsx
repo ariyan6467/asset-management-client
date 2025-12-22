@@ -1,17 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react"; // Added useState
 import UseAxiosSecure from "../../../hook/UseAxiosSecure";
 import { motion } from "framer-motion";
-import { FaLaptop, FaEdit, FaTrashAlt, FaCalendarAlt, FaSpinner } from "react-icons/fa"; // Added icons
-import moment from "moment"; // Assuming moment or a similar library for date formatting
+import { FaLaptop, FaEdit, FaTrashAlt, FaCalendarAlt, FaSpinner, FaBoxes, FaSearch } from "react-icons/fa"; 
+import moment from "moment";
 import Logo from "../../../Page/Home/Navbar/Logo";
 import UseAuth from "../../../hook/UseAuth";
 
 const AssetList = () => {
-  const {user} = UseAuth();
-  console.log(user);
+  const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
-  // Renamed 'asstes' to 'assets' for better clarity and corrected the refetch placement
+  
+  // 1. State for the search text
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {
     isLoading,
     isError,
@@ -25,16 +27,16 @@ const AssetList = () => {
       return result.data;
     },
   });
-  console.log(assets);
-  // Framer Motion variants for staggered entry
+
+  // 2. Logic to filter assets based on Product Name or Type
+  const filteredAssets = assets.filter((asset) =>
+    asset.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asset.productType.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
   };
 
   const itemVariants = {
@@ -42,46 +44,39 @@ const AssetList = () => {
     visible: { y: 0, opacity: 1 },
   };
 
-  // --- Rendering States ---
-
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64 bg-base-100 rounded-xl shadow-lg">
-        <FaSpinner className="animate-spin text-primary text-4xl mr-3" />
-        <p className="text-xl font-semibold text-gray-600">Loading Assets...</p>
+      <div className="flex flex-col justify-center items-center h-64 bg-base-100 rounded-xl shadow-lg">
+        <FaSpinner className="animate-spin text-primary text-4xl mb-4" />
+        <p className="text-lg font-semibold text-gray-600">Loading Assets...</p>
       </div>
     );
   }
-
-  if (isError) {
-    return (
-      <div className="p-8 bg-error/10 border border-error text-error rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold mb-2">Error</h2>
-        <p>Could not fetch assets. Please try again. Error: {error.message}</p>
-        <button onClick={() => refetch()} className="btn btn-sm btn-error mt-4">
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  if (assets.length === 0) {
-    return (
-      <div className="p-10 bg-info/10 border border-info text-info-content rounded-xl shadow-lg text-center">
-        <FaLaptop className="text-5xl mx-auto mb-4" />
-        <h2 className="text-2xl font-bold mb-2">No Assets Found</h2>
-        <p>It looks like there are no assets available at the moment.</p>
-      </div>
-    );
-  }
-
-  // --- Main Component Render ---
 
   return (
-    <div className="p-6 bg-base-100 rounded-2xl shadow-2xl">
-      <h2 className="text-3xl font-extrabold mb-6 text-teal-500 flex items-center">
-        <Logo className="mr-3" /> Asset Inventory
-      </h2>
+    <div className="p-2 sm:p-6 bg-base-100 rounded-2xl shadow-2xl min-h-screen">
+      {/* --- Responsive Header & Search Bar --- */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-teal-500 flex items-center">
+          <Logo className="mr-3 scale-90 md:scale-100" /> 
+          <span>Asset Inventory</span>
+        </h2>
+
+        <div className="relative w-full lg:max-w-md">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search by name or type..."
+            className="input input-bordered w-full pl-10 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all rounded-full"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* --- Table Section --- */}
       <div className="overflow-x-auto rounded-xl border border-base-200">
         <motion.table
           className="table w-full table-zebra"
@@ -89,78 +84,66 @@ const AssetList = () => {
           initial="hidden"
           animate="visible"
         >
-          {/* head */}
-          <thead className="bg-primary text-primary-content sticky top-0 shadow-md">
+          <thead className="bg-primary text-primary-content sticky top-0">
             <tr>
-              <th className="py-4 text-center">#</th>
+              <th className="py-4 text-center hidden sm:table-cell">#</th>
               <th className="py-4">Product Info</th>
-              <th className="py-4">
-                <FaCalendarAlt className="inline mr-1" /> Date Added
-              </th>
-              <th className="py-4">Type</th>
+              <th className="py-4 hidden lg:table-cell">Date Added</th>
+              <th className="py-4 hidden md:table-cell">Type</th>
+              <th className="py-4 text-center">Qty</th>
               <th className="py-4 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {assets.map((asset, index) => (
-              <motion.tr
-                key={asset.id || index} // Use a unique ID if available
-                className="hover:bg-base-200 transition-colors duration-200 group"
-                variants={itemVariants}
-              >
-                <th className="text-center font-bold text-lg text-primary">{index + 1}</th>
-                <td>
-                  <div className="flex items-center gap-4">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-14 w-14 border-2 border-primary/50 transition-transform group-hover:scale-105">
-                        <img
-                          src={asset?.productImage}
-                          alt={`${asset?.productName} image`}
-                          className="object-cover"
-                        />
+            {filteredAssets.length > 0 ? (
+              filteredAssets.map((asset, index) => (
+                <motion.tr
+                  key={asset._id || index}
+                  className="hover:bg-base-200 transition-colors group"
+                  variants={itemVariants}
+                >
+                  <th className="text-center font-bold text-primary hidden sm:table-cell">
+                    {index + 1}
+                  </th>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12 border border-primary/20">
+                          <img src={asset?.productImage} alt="asset" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm md:text-base">{asset?.productName}</div>
+                        <div className="text-xs opacity-50 hidden sm:block">{asset?.email}</div>
                       </div>
                     </div>
-                    <div>
-                      <div className="font-extrabold text-lg text-neutral-content transition-colors group-hover:text-primary">
-                        {asset?.productName}
-                      </div>
-                      <div className="text-sm opacity-70 text-gray-500">
-                        {asset?.email}
-                      </div>
+                  </td>
+                  <td className="hidden lg:table-cell">
+                    <span className="text-sm">{moment(asset.dataAdded).format("ll")}</span>
+                  </td>
+                  <td className="hidden md:table-cell">
+                    <span className="badge badge-sm badge-outline">{asset?.productType}</span>
+                  </td>
+                  <td className="text-center font-bold">{asset?.productQuantity || 0}</td>
+                  <td className="text-center">
+                    <div className="flex flex-col lg:flex-row gap-2 justify-center">
+                      <button className="btn btn-xs btn-info"><FaEdit /></button>
+                      <button className="btn btn-xs btn-error"><FaTrashAlt /></button>
                     </div>
+                  </td>
+                </motion.tr>
+              ))
+            ) : (
+              /* --- Empty Search State --- */
+              <tr>
+                <td colSpan="6" className="text-center py-20">
+                  <div className="flex flex-col items-center opacity-40">
+                    <FaSearch className="text-6xl mb-4" />
+                    <p className="text-xl font-semibold">No assets match "{searchTerm}"</p>
                   </div>
                 </td>
-                <td>
-                  <span className="text-sm font-medium text-gray-600">
-                    {/* Format the date for a better look */}
-                    {moment(asset.dataAdded).format("MMM D, YYYY")} 
-                  </span>
-                </td>
-                <td>
-                  <span className="badge badge-lg badge-outline badge-secondary font-semibold transition-all group-hover:badge-secondary/80">
-                    {asset?.productType}
-                  </span>
-                </td>
-                <td className="text-center space-x-3.5">
-                  <motion.button
-                    className="btn btn-sm btn-info text-info-content hover:bg-info/90 border-0 shadow-md hover:shadow-lg transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaEdit />
-                    Details
-                  </motion.button>
-                  <motion.button
-                    className="btn btn-sm btn-error text-error-content hover:bg-error/90 border-0 shadow-md hover:shadow-lg transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaTrashAlt />
-                    Remove
-                  </motion.button>
-                </td>
-              </motion.tr>
-            ))}
+              </tr>
+            )}
           </tbody>
         </motion.table>
       </div>
