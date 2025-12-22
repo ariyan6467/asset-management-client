@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { HiOutlineHome } from "react-icons/hi";
 import { NavLink, useSearchParams } from "react-router";
 import UseAxiosSecure from "../../../hook/UseAxiosSecure";
-
+import swal from 'sweetalert';
 // Function to simulate the Home navigation action
 const handleGoHome = () => {
   // Replace this with your actual routing logic (e.g., using React Router's useNavigate)
@@ -25,6 +25,7 @@ useEffect(()=>{
         axiosSecure.patch(`/package-payment-successful?session_id=${sessionId}`)
         .then(res => {
             console.log(res.data);
+            swal("Payment Done!", "You Package has been updated!", "success");
         })
     
   console.log(isExist.current)

@@ -28,6 +28,7 @@
     "reactflow": "^11.11.4",
     "recharts": "^3.6.0",
     "styled-components": "^6.1.19",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.26.4",
     "tailwindcss": "^4.1.17"
   },

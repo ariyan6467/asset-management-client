@@ -18,6 +18,8 @@ const AssetCard = ({ asset }) => {
     status,
   } = asset;
 
+  console.log(asset);
+ 
   const getStatusStyles = (status) => {
     const map = {
       approved: 'bg-emerald-500/10 text-emerald-600 border-emerald-200 shadow-emerald-100',

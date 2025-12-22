@@ -2,73 +2,59 @@ import React from "react";
 import styled from "styled-components";
 import { useQueryClient } from "@tanstack/react-query";
 import UseAxiosSecure from "../../hook/UseAxiosSecure";
-import Swal from "sweetalert2"; // Optional, for confirmation dialog
+import Swal from "sweetalert2";
 
 const MyEmployeeCard = ({ employee, onDelete }) => {
   const axiosSecure = UseAxiosSecure();
   const queryClient = useQueryClient();
-
-  // Delete function
-  const handleDelete = async (employeeId) => {
+   console.log(employee.employeeEmail);
+  const handleDelete = async (employeeEmail) => {
     try {
-      // Confirm before deletion
       const confirmation = await Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to undo this!",
+        text: "This action cannot be undone.",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, remove",
       });
 
       if (confirmation.isConfirmed) {
-        // Send DELETE request to the API
-        const response = await axiosSecure.delete(`/remove-employee/${employeeId}`);
-        
-        // Check if deletion was successful
+        const response = await axiosSecure.delete(`/remove-employee/${employeeEmail}`);
         if (response.data?.success === true || response.data?.deletedCount > 0) {
-          // Invalidate and refetch the query to update the UI
           await queryClient.invalidateQueries({ queryKey: ["my-employees"] });
-          
-          // Show success toast
-          Swal.fire("Deleted!", "The employee has been removed.", "success");
-
-          // Call the onDelete prop function if provided
-          if (onDelete) {
-            onDelete();
-          }
-        } else {
-          Swal.fire("Error", response.data?.message || "Employee was not found or could not be deleted.", "error");
+          Swal.fire("Removed!", "Employee has been deleted.", "success");
+          if (onDelete) onDelete();
         }
       }
     } catch (error) {
-      console.error("Error deleting employee:", error);
-      const errorMessage = error.response?.data?.message || "There was an issue deleting the employee.";
-      Swal.fire("Error", errorMessage, "error");
+      Swal.fire("Error", "Failed to delete employee.", "error");
     }
   };
 
   return (
     <StyledWrapper>
       <div className="card">
-        <div className="card__img">
-          <svg xmlns="http://www.w3.org/2000/svg" width="100%">
-            <rect fill="#ffffff" width={540} height={450} />
-          </svg>
-        </div>
+        <div className="card__header-gradient" />
         <div className="card__avatar">
-          <img className="rounded-full h-full w-full" src={employee?.companyLogo} alt="Employee Logo" />
+          <img src={employee?.companyLogo} alt="Avatar" />
         </div>
-        <div className="card__title">{employee?.employeeName}</div>
-        <div className="card__subtitle">{employee?.employeeEmail}</div>
-        <div className="card__subtitle">{employee?.affiliationDate}</div>
-        <div className="card__wrapper">
-          <button
-            onClick={() => handleDelete(employee?._id)}  // onClick handler for the delete button
-            className="card__btn card__btn-solid"
-          >
-            Remove
-          </button>
+        <div className="card__content">
+          <h3 className="card__name">{employee?.employeeName}</h3>
+          <p className="card__email">{employee?.employeeEmail}</p>
+          <div className="card__info">
+            <span className="info-label">Member Affiliated</span>
+            <span className="info-value">{employee?.affiliationDate}</span>
+          </div>
+          <div className="card__actions">
+            <button
+              onClick={() => handleDelete(employee?.employeeEmail)}
+              className="card__btn-remove"
+            >
+              Remove Employee
+            </button>
+          </div>
         </div>
       </div>
     </StyledWrapper>
@@ -76,91 +62,125 @@ const MyEmployeeCard = ({ employee, onDelete }) => {
 };
 
 const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+
   .card {
-    --main-color: #000;
-    --submain-color: #78858f;
-    --bg-color: #fff;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    --primary: #4f46e5;
+    --danger: #ef4444;
+    --text-main: #1f2937;
+    --text-sub: #6b7280;
+    --bg-card: #ffffff;
+
     position: relative;
-    width: 280px;
-    height: 450px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 15px;
-    background: var(--bg-color);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 320px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid #f3f4f6;
   }
 
   .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.15);
   }
 
-  .card__img {
-    height: 160px;
-    width: 100%;
-    border-radius: 15px 15px 0 0;
+  .card__header-gradient {
+    height: 100px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   }
 
   .card__avatar {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    background: var(--bg-color);
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 100px;
-    border: 5px solid var(--bg-color);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 90px;
+    background: white;
+    padding: 4px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
-  .card__title {
-    margin-top: 120px;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--main-color);
+  .card__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .card__content {
+    padding: 60px 24px 24px 24px;
     text-align: center;
   }
 
-  .card__subtitle {
-    margin-top: 8px;
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--submain-color);
-    text-align: center;
-  }
-
-  .card__btn {
-    margin-top: 15px;
-    width: 100px;
-    height: 35px;
-    border: 2px solid var(--main-color);
-    border-radius: 4px;
+  .card__name {
+    font-size: 1.25rem;
     font-weight: 700;
-    font-size: 12px;
-    color: var(--main-color);
-    background: var(--bg-color);
+    color: var(--text-main);
+    margin-bottom: 4px;
+    letter-spacing: -0.025em;
+  }
+
+  .card__email {
+    font-size: 0.875rem;
+    color: var(--text-sub);
+    margin-bottom: 20px;
+  }
+
+  .card__info {
+    background: #f9fafb;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .info-label {
+    font-size: 0.7rem;
     text-transform: uppercase;
-    transition: all 0.3s;
+    letter-spacing: 0.05em;
+    color: var(--text-sub);
+    font-weight: 600;
   }
 
-  .card__btn-solid {
-    background: var(--main-color);
-    color: var(--bg-color);
+  .info-value {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    font-weight: 500;
   }
 
-  .card__btn:hover {
-    background: var(--main-color);
-    color: var(--bg-color);
+  .card__btn-remove {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid var(--danger);
+    background: transparent;
+    color: var(--danger);
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  .card__btn-solid:hover {
-    background: var(--bg-color);
-    color: var(--main-color);
+  .card__btn-remove:hover {
+    background: var(--danger);
+    color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 480px) {
+    .card {
+      max-width: 100%;
+    }
   }
 `;
 
