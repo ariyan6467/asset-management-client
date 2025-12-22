@@ -1,6 +1,6 @@
 import React from 'react';
 import AccordionItem from './AccordianItem';
-import './FAQ.css'; 
+// import './FAQ.css'; 
 
 const faqData = [
   {

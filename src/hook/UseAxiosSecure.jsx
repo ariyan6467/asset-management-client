@@ -4,7 +4,7 @@ import UseAuth from "./UseAuth";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://asset-management-server-teal.vercel.app/",
 });
 
 const UseAxiosSecure = () => {
