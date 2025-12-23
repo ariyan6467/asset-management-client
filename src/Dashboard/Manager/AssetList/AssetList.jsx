@@ -52,7 +52,7 @@ const AssetList = () => {
       </div>
     );
   }
-
+ console.log(assets);
   return (
     <div className="p-2 sm:p-6 bg-base-100 rounded-2xl shadow-2xl min-h-screen">
       {/* --- Responsive Header & Search Bar --- */}
@@ -124,7 +124,7 @@ const AssetList = () => {
                   <td className="hidden md:table-cell">
                     <span className="badge badge-sm badge-outline">{asset?.productType}</span>
                   </td>
-                  <td className="text-center font-bold">{asset?.productQuantity || 0}</td>
+                  <td className="text-center font-bold">{asset?.availableQuantity || 0}</td>
                   <td className="text-center">
                     <div className="flex flex-col lg:flex-row gap-2 justify-center">
                       <button className="btn btn-xs btn-info"><FaEdit /></button>

@@ -15,6 +15,7 @@ const MyEmployee = () => {
       return result.data;
     },
   });
+  console.log(employees);
 
   return (
     <div className="text-center p-5">

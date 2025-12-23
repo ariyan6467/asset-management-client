@@ -250,13 +250,16 @@ const DashBoardLayout = () => {
       {/* === 2. Main Content Area (Canvas and Footer) === */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header/Search */}
-        <header className="p-3 bg-white border-b border-gray-300 flex justify-end">
+        {
+          userRole === "HR Manager" &&   <header className="p-3 bg-white border-b border-gray-300 flex justify-end">
           <NavLink to="/dashboard/payment-history">
             <div className="w-64">
            <HistoryBth></HistoryBth>
           </div>
           </NavLink>
         </header>
+        }
+      
 
         {/* Workflow Canvas Area */}
         <div

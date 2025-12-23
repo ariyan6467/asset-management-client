@@ -3,10 +3,12 @@ import React, { useMemo } from 'react';
 import UseAxiosSecure from '../../hook/UseAxiosSecure';
 import PieChart from './Pie/PieChart';
 import BarChart from './Bar/BarChart';
+import UseRole from '../../hook/UseRole';
+import MyProfile from '../Employee/MyProfile/MyProfile';
 
 const MainDashBoard = () => {
     const axiosSecure = UseAxiosSecure();
-    
+    const{userRole} = UseRole();
     // Get asset data for pie chart
     const {
         data: assets = [],
@@ -47,7 +49,9 @@ const MainDashBoard = () => {
     }, [assets, requests]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+      <>
+      {
+        userRole === "HR Manager"? (  <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
             {/* Dashboard Header */}
             <div className="mb-8">
                 <h1 className="text-4xl font-bold text-gray-800 mb-2">Dashboard Overview</h1>
@@ -125,7 +129,9 @@ const MainDashBoard = () => {
                     <BarChart requests={requests} />
                 </div>
             </div>
-        </div>
+        </div>):(<MyProfile></MyProfile>)
+      }
+      </>
     );
 };
 

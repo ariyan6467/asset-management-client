@@ -4,6 +4,9 @@ import { Check, Zap, Loader2 } from "lucide-react"; // Added Loader2 for loading
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../hook/UseAxiosSecure"; // Assuming this hook provides the axios instance
 import UseAuth from "../../hook/UseAuth";
+import HistoryBth from "./Payment/PaymentHistory/HistoryBth";
+import { NavLink } from "react-router";
+import HistoryBtnTwo from "./Payment/PaymentHistory/HistoryBtnTwo";
 
 // --- Checkmark Feature Component ---
 // NOTE: This component is currently unused but kept for completeness based on your original file.
@@ -232,6 +235,13 @@ const UpgradePackage = () => {
           </p>
         )}
       </div>
+       <div className="mx-auto">
+        <NavLink to="/dashboard/payment-history">
+            <div className="w-60 mx-auto mt-10">
+          <HistoryBtnTwo></HistoryBtnTwo>
+          </div>
+          </NavLink>
+       </div>
     </section>
   );
 };
